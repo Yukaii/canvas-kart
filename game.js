@@ -42,7 +42,6 @@ class Kart {
   render() {
     ctx.save();
     ctx.translate(this.x, this.y);
-    ctx.rotate(this.angle);
     ctx.fillStyle = "red";
     ctx.beginPath();
     ctx.moveTo(-10, -10);
@@ -61,7 +60,12 @@ class Track {
     this.gridSize = 50;
   }
 
-  render(offsetX, offsetY) {
+  render(offsetX, offsetY, angle) {
+    ctx.save();
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate(-angle);
+    ctx.translate(-canvas.width / 2, -canvas.height / 2);
+
     ctx.strokeStyle = "gray";
     ctx.lineWidth = 1;
 
@@ -86,6 +90,8 @@ class Track {
       ctx.lineTo(canvas.width, j);
       ctx.stroke();
     }
+
+    ctx.restore();
   }
 }
 
@@ -93,27 +99,27 @@ const track = new Track();
 
 const keys = {};
 
-window.addEventListener('keydown', (e) => {
-    keys[e.key] = true;
+window.addEventListener("keydown", (e) => {
+  keys[e.key] = true;
 });
 
-window.addEventListener('keyup', (e) => {
-    keys[e.key] = false;
+window.addEventListener("keyup", (e) => {
+  keys[e.key] = false;
 });
 
 function handleInput() {
-    if (keys['ArrowUp']) {
-        kart.moveForward();
-    }
-    if (keys['ArrowDown']) {
-        kart.moveBackward();
-    }
-    if (keys['ArrowLeft']) {
-        kart.turnLeft();
-    }
-    if (keys['ArrowRight']) {
-        kart.turnRight();
-    }
+  if (keys["ArrowUp"]) {
+    kart.moveForward();
+  }
+  if (keys["ArrowDown"]) {
+    kart.moveBackward();
+  }
+  if (keys["ArrowLeft"]) {
+    kart.turnLeft();
+  }
+  if (keys["ArrowRight"]) {
+    kart.turnRight();
+  }
 }
 
 function update() {
@@ -130,8 +136,8 @@ function update() {
 
 function render() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  
-  track.render(trackOffsetX, trackOffsetY);
+
+  track.render(trackOffsetX, trackOffsetY, kart.angle);
   kart.render();
 }
 
