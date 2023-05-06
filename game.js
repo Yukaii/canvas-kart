@@ -1,4 +1,5 @@
 const canvas = document.getElementById("gameCanvas");
+/** @type {CanvasRenderingContext2D} */
 const ctx = canvas.getContext("2d");
 
 let trackOffsetX = 0;
@@ -28,11 +29,11 @@ class Kart {
   }
 
   turnLeft() {
-    this.angle -= 0.05;
+    this.angle += 0.05;
   }
 
   turnRight() {
-    this.angle += 0.05;
+    this.angle -= 0.05;
   }
 
   update() {
@@ -44,9 +45,9 @@ class Kart {
     ctx.translate(this.x, this.y);
     ctx.fillStyle = "red";
     ctx.beginPath();
-    ctx.moveTo(-10, -10);
-    ctx.lineTo(-10, 10);
-    ctx.lineTo(20, 0);
+    ctx.moveTo(-10, 10);
+    ctx.lineTo(10, 10);
+    ctx.lineTo(0, -20);
     ctx.closePath();
     ctx.fill();
     ctx.restore();
@@ -63,7 +64,7 @@ class Track {
   render(offsetX, offsetY, angle) {
     ctx.save();
     ctx.translate(canvas.width / 2, canvas.height / 2);
-    ctx.rotate(-angle);
+    ctx.rotate(angle);
     ctx.translate(-canvas.width / 2, -canvas.height / 2);
 
     ctx.strokeStyle = "gray";
@@ -124,8 +125,8 @@ function handleInput() {
 
 function update() {
   handleInput();
-  const dx = Math.cos(kart.angle) * kart.velocity;
-  const dy = Math.sin(kart.angle) * kart.velocity;
+  const dx = Math.sin(kart.angle) * kart.velocity;
+  const dy = Math.cos(kart.angle) * kart.velocity;
 
   // Move the terrain instead of the kart
   trackOffsetX -= dx;
