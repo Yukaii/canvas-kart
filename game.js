@@ -18,10 +18,20 @@ class Kart {
     this.angle = angle;
     this.velocity = 0;
     this.acceleration = 0.05;
+    this.friction = 0.98;
+    this.angularVelocity = 0;
+    this.angularAcceleration = 0.05;
+    this.angularFriction = 0.95;
+
+    this.maxVelocity = 9;
   }
 
   moveForward() {
     this.velocity += this.acceleration;
+
+    if (this.velocity > this.maxVelocity) {
+      this.velocity = this.maxVelocity;
+    }
   }
 
   moveBackward() {
@@ -37,7 +47,7 @@ class Kart {
   }
 
   update() {
-    // Update kart position, drifting, N2O, etc.
+    this.angle += this.angularVelocity;
   }
 
   render() {
@@ -111,15 +121,18 @@ window.addEventListener("keyup", (e) => {
 function handleInput() {
   if (keys["ArrowUp"]) {
     kart.moveForward();
-  }
-  if (keys["ArrowDown"]) {
+  } else if (keys["ArrowDown"]) {
     kart.moveBackward();
+  } else {
+    kart.velocity *= kart.friction;
   }
+
   if (keys["ArrowLeft"]) {
     kart.turnLeft();
-  }
-  if (keys["ArrowRight"]) {
+  } else if (keys["ArrowRight"]) {
     kart.turnRight();
+  } else {
+    kart.angularVelocity *= kart.angularFriction;
   }
 }
 
