@@ -42,7 +42,7 @@ class Kart {
   turnLeft() {
     if (Math.abs(this.velocity) > 0.01) {
       // The kart should be moving to turn
-      const speedFactor = Math.max(0.3, Math.log(Math.abs(this.velocity) + 1)); // Calculate a factor based on the kart's velocity using a logarithmic function
+      const speedFactor = Math.max(0.2, 0.5 * Math.log(Math.abs(this.velocity) + 1)); // Calculate a factor based on the kart's velocity using a logarithmic function
       this.angularVelocity = Math.min(
         this.angularVelocity + this.angularAcceleration * speedFactor,
         this.maxAngularVelocity,
@@ -53,7 +53,7 @@ class Kart {
   turnRight() {
     if (Math.abs(this.velocity) > 0.01) {
       // The kart should be moving to turn
-      const speedFactor = Math.max(0.3, Math.log(Math.abs(this.velocity) + 1)); // Calculate a factor based on the kart's velocity using a logarithmic function
+      const speedFactor = Math.max(0.2, 0.5 * Math.log(Math.abs(this.velocity) + 1)); // Calculate a factor based on the kart's velocity using a logarithmic function
       this.angularVelocity = Math.max(
         this.angularVelocity - this.angularAcceleration * speedFactor,
         -this.maxAngularVelocity,
