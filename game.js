@@ -39,15 +39,23 @@ class Kart {
     this.velocity -= this.acceleration;
   }
 
-turnLeft() {
-    if (Math.abs(this.velocity) > 0.01) { // The kart should be moving to turn
-      this.angularVelocity = Math.min(this.angularVelocity + this.angularAcceleration, this.maxAngularVelocity);
+  turnLeft() {
+    if (Math.abs(this.velocity) > 0.01) {
+      // The kart should be moving to turn
+      this.angularVelocity = Math.min(
+        this.angularVelocity + this.angularAcceleration,
+        this.maxAngularVelocity,
+      );
     }
   }
 
   turnRight() {
-    if (Math.abs(this.velocity) > 0.01) { // The kart should be moving to turn
-      this.angularVelocity = Math.max(this.angularVelocity - this.angularAcceleration, -this.maxAngularVelocity);
+    if (Math.abs(this.velocity) > 0.01) {
+      // The kart should be moving to turn
+      this.angularVelocity = Math.max(
+        this.angularVelocity - this.angularAcceleration,
+        -this.maxAngularVelocity,
+      );
     }
   }
 
@@ -157,9 +165,12 @@ function update() {
 function render() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Calculate the interpolated angle using a cubic Bezier curve
+  // Calculate the interpolated angle using a cubic Bezier curve
   const t = 0.1;
-  const interpolatedAngle = prevAngle * (1 - t) * (1 - t) * (1 - t) + 3 * kart.angle * t * (1 - t) * (1 - t) + 3 * kart.angle * t * t * (1 - t) + kart.angle * t * t * t;
+  const interpolatedAngle = prevAngle * (1 - t) * (1 - t) * (1 - t) +
+    3 * kart.angle * t * (1 - t) * (1 - t) +
+    3 * kart.angle * t * t * (1 - t) +
+    kart.angle * t * t * t;
 
   track.render(trackOffsetX, trackOffsetY, interpolatedAngle);
   kart.render(kart.angularVelocity);
